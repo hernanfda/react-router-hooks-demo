@@ -7,7 +7,7 @@ const ApiPage = () => {
     const [characterList, setcharacterList] = useState([{}]); //TODO: Porque tengo que poner las llaves en los corchetes para que funcione
     const [isLoading, setIsLoading] = useState(true);
     const [currentCharacter, setCurrentCharacter] = useState(1);
-    const [characterDetails, setCharacterDetails] = useState({});
+    const [characterDetails, setCharacterDetails] = useState({}); //TODO: Agregar un currentCharacter dinamico
     const [inputSearchText, setInputSearchText] = useState("");
 
     useEffect(() => {
@@ -15,7 +15,7 @@ const ApiPage = () => {
             setcharacterList(data);
             characterList.length > 0 ? setIsLoading(false) : console.log("characterList ta vacio");
         }); //Completo characterList con la data que me traigo de la request
-    }, []);
+    }, []); //TODO: Porque actualiza cuando completo la busqueda si no esta escuchando a characterlist en el array???
 
     //Cuando cambia el current character, hago un pedido nuevo a la api al character especifico
     useEffect(() => {
