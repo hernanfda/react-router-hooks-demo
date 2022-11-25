@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getCharacter, getPeople, searchCharacter } from "../../api/apiRequests";
+import { getCharacter, getPeople, searchCharacter } from "../../api/swapiRequests";
 
 const ApiPage = () => {
     const inputSearch = useRef(null);
@@ -10,16 +10,26 @@ const ApiPage = () => {
     const [characterDetails, setCharacterDetails] = useState({}); //TODO: Agregar un currentCharacter dinamico
     const [inputSearchText, setInputSearchText] = useState("");
 
+    // async function getCharacter(id = 1) {
+    //     const API_URL = `https://swapi.dev/api/people/${id}`;
+    //     const character = await fetch(API_URL).then((response) => response.json());
+    //     return character;
+    // }
+
     useEffect(() => {
-        getPeople().then((data) => {
-            setcharacterList(data);
-            characterList.length > 0 ? setIsLoading(false) : console.log("characterList ta vacio");
-        }); //Completo characterList con la data que me traigo de la request
+        getPeople()
+            .then((data) => {
+                setcharacterList(data);
+                characterList.length > 0 ? setIsLoading(false) : console.log("characterList ta vacio");
+            })
+            .catch((error) => console.log(error)); //Completo characterList con la data que me traigo de la request
     }, []); //TODO: Porque actualiza cuando completo la busqueda si no esta escuchando a characterlist en el array???
 
     //Cuando cambia el current character, hago un pedido nuevo a la api al character especifico
     useEffect(() => {
-        getCharacter(currentCharacter).then((data) => setCharacterDetails(data));
+        getCharacter(currentCharacter)
+            .then((data) => setCharacterDetails(data))
+            .catch((error) => console.log(error));
     }, [currentCharacter]);
 
     //--CHARACTER DETAILS--
